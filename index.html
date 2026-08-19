@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tomorrow Is a Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="brand">Tomorrow Is a Practice</div>
+    <button class="nav-toggle" onclick="document.querySelector('nav ul').classList.toggle('open')">Menu</button>
+    <nav>
+      <ul>
+        <li><a data-page="home" class="active">Home</a></li>
+        <li><a data-page="book">The Book</a></li>
+        <li><a data-page="author">Author</a></li>
+        <li><a data-page="sample">Sample</a></li>
+        <li><a data-page="read">Read</a></li>
+        <li><a data-page="reviews">Reviews</a></li>
+        <li><a data-page="faq">FAQ</a></li>
+        <li><a data-page="contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ===================== HOME ===================== -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Practicing Islamic Values</div>
+        <div class="eyebrow-sub">in your decisions, reactions, and relationships</div>
+        <h1 class="hero-title">Tomorrow Is A<span class="accent">Practice</span></h1>
+        <p class="hero-tagline">Twelve values. Six anchored practices. Everyday stories that show what it looks like to keep Allah in mind — in the moments that actually shape who we become.</p>
+        <div class="cta-row">
+          <button class="btn btn-primary" onclick="goTo('contact')">Get Notified at Launch</button>
+          <button class="btn btn-ghost" onclick="goTo('sample')">Read a Sample</button>
+        </div>
+      </div>
+      <div class="cover-frame">
+        <img src="assets/img/book-cover.jpg" alt="Tomorrow Is a Practice — book cover">
+        <div class="badge-soon">Coming Soon · Amazon</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap" style="padding: 0 32px;">
+    <div class="rule"></div>
+  </div>
+  <div style="padding: 30px 32px;">
+    <div class="triad">
+      <span>Six Anchored Practices</span>
+      <span>Twelve Values</span>
+      <span>Everyday Moments of Choice</span>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <div class="rule"></div>
+    <p>Small choices. Steady practice. Strong character.<br><span class="em">Closer to Allah.</span></p>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-eyebrow">Why This Book</div>
+        <h2>Values we hear about.<br>A book that shows how to live them.</h2>
+        <p class="sec-sub">Tafakkur. Muraqabah. Sabr. Tawakkul. Words familiar from the khutbah — but harder to hold onto in the middle of a hard conversation, a rushed morning, or a decision no one else can make for you. This book meets you there, through stories, not lectures.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== THE BOOK ===================== -->
+<div class="page" id="page-book">
+  <section style="padding-top:60px;">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-eyebrow">About the Book</div>
+        <h2>A practical path to emotional clarity, spiritual strength, and peace.</h2>
+      </div>
+      <div class="book-grid">
+        <div>
+          <p>This is a short, practical book on emotional well-being from an Islamic perspective. Built around twelve core Islamic values — tafakkur (reflection), muraqabah (awareness of Allah), sabr (patience), tawakkul (trust in Allah), and eight others — it brings these ideas into ordinary Muslim life through engaging, fictional stories.</p>
+          <p>The narratives explore conversations, decisions, relationships, work, family life, mistakes, pressure, and healing — the everyday moments where character is actually formed. Rather than staying at the level of the lecture, the book asks: what does this value look like when you're the one living it?</p>
+          <p>Before writing began, a focus group of ten readers — including working professionals, physicians, and community members — reviewed the manuscript and shaped its final form.</p>
+        </div>
+        <div>
+          <div class="stat-row">
+            <div class="stat"><div class="num">12</div><div class="lbl">Chapters</div></div>
+            <div class="stat"><div class="num">12–13</div><div class="lbl">Pages per chapter</div></div>
+            <div class="stat"><div class="num">12</div><div class="lbl">Islamic values</div></div>
+            <div class="stat"><div class="num">6</div><div class="lbl">Anchored practices</div></div>
+          </div>
+          <div style="margin-top:36px;">
+            <div class="sec-eyebrow" style="text-align:left;">Who It's For</div>
+            <p style="color:#3a3428; margin-top:10px;">Students. Professionals. Parents. Caregivers. Homemakers. Community volunteers. Anyone striving to live with greater intention — and to recognize, in the ordinary moments, the choices that shape who they are becoming.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="values-wrap">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-eyebrow">The Framework</div>
+        <h2>Twelve Values, Explored Through Story</h2>
+        <p class="sec-sub">Four confirmed below — the remaining eight will be revealed as the book nears launch.</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <div>
+            <div class="ar">تفكر</div>
+            <div class="tr">Tafakkur</div>
+            <div class="en">Reflection</div>
+          </div>
+          <div class="desc">Pausing to think deeply before reacting.</div>
+        </div>
+        <div class="value-card">
+          <div>
+            <div class="ar">مراقبة</div>
+            <div class="tr">Muraqabah</div>
+            <div class="en">Awareness of Allah</div>
+          </div>
+          <div class="desc">Carrying that awareness into ordinary moments.</div>
+        </div>
+        <div class="value-card">
+          <div>
+            <div class="ar">صبر</div>
+            <div class="tr">Sabr</div>
+            <div class="en">Patience</div>
+          </div>
+          <div class="desc">Holding steady when things don't go as planned.</div>
+        </div>
+        <div class="value-card">
+          <div>
+            <div class="ar">توكل</div>
+            <div class="tr">Tawakkul</div>
+            <div class="en">Trust in Allah</div>
+          </div>
+          <div class="desc">Doing your part, then releasing the outcome.</div>
+        </div>
+        <div class="value-card tbd"><div class="en">+ 8 more<br>values</div></div>
+        <div class="value-card tbd"><div class="en">Revealed<br>closer to launch</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== AUTHOR ===================== -->
+<div class="page" id="page-author">
+  <section style="padding-top:70px;">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-eyebrow">About the Author</div>
+        <h2>Meet the Author</h2>
+      </div>
+      <div class="author-wrap">
+        <div class="author-photo">Author photo<br>coming soon</div>
+        <div class="author-bio">
+          <p><em>[Author bio placeholder — share a paragraph on your background and why you wrote this book, and I'll drop it in here.]</em></p>
+          <p>This book grew out of more than a year of writing, research, reflection, and revision — refined with the help of a focus group of ten readers, including working professionals and physicians, whose feedback shaped it into its final form.</p>
+          <div class="tag-row">
+            <span class="tag">Author</span>
+            <span class="tag">Researcher</span>
+            <span class="tag">Community Member</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== SAMPLE ===================== -->
+<div class="page" id="page-sample">
+  <section style="padding-top:70px;">
+    <div class="wrap-narrow">
+      <div class="sec-head">
+        <div class="sec-eyebrow">A First Look</div>
+        <h2>Read a Sample</h2>
+        <p class="sec-sub">One story from the book, so you can feel the voice before it launches.</p>
+      </div>
+      <div class="sample-box">
+        <span class="chapter-tag">Chapter — Sabr (Patience)</span>
+        <p><em>[Excerpt placeholder — send over a short passage or story from one chapter, and I'll set it here in full, formatted like a real book page.]</em></p>
+        <p>This is where a reader gets their first real taste of the writing — the moment that usually decides whether they scroll on or sign up to read the rest.</p>
+        <div class="placeholder-note">Full excerpt to be added before launch.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== READ (PDF LIBRARY + VIEWER) ===================== -->
+<div class="page" id="page-read">
+  <section style="padding-top:70px;">
+    <div class="wrap-narrow">
+
+      <!-- Library view: list of available chapters -->
+      <div id="read-library">
+        <div class="sec-head">
+          <div class="sec-eyebrow">Read Online</div>
+          <h2>Available Chapters</h2>
+          <p class="sec-sub">Read directly in your browser — no download needed. New chapters will appear here as they're shared.</p>
+        </div>
+        <div class="doc-grid" id="doc-grid"></div>
+      </div>
+
+      <!-- Viewer: renders whichever PDF is requested -->
+      <div id="read-viewer" style="display:none;">
+        <span class="read-back" onclick="closeViewer()">&larr; Back to all chapters</span>
+        <div class="pdf-shell">
+          <div class="pdf-title-bar" id="pdf-title-bar">Loading…</div>
+          <div class="pdf-pages" id="pdf-pages">
+            <div class="pdf-status" id="pdf-status">Loading document…</div>
+          </div>
+          <div class="pdf-note">For reading only — this preview can't be downloaded or printed.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ===================== REVIEWS ===================== -->
+<div class="page" id="page-reviews">
+  <section style="padding-top:70px;">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-eyebrow">From the Focus Group</div>
+        <h2>Early Readers Weigh In</h2>
+        <p class="sec-sub">Ten readers — working professionals, physicians, and community members — reviewed the manuscript before it was finalized. Their feedback shaped the book.</p>
+      </div>
+      <div class="review-grid">
+        <div class="review-card">
+          <p>"[Placeholder quote — swap in real feedback from your focus group once you have permission to share it.]"</p>
+          <div class="review-name">Reader Name</div>
+          <div class="review-role">Physician, Focus Group</div>
+        </div>
+        <div class="review-card">
+          <p>"[Placeholder quote — a second piece of feedback goes here.]"</p>
+          <div class="review-name">Reader Name</div>
+          <div class="review-role">Working Professional, Focus Group</div>
+        </div>
+        <div class="review-card">
+          <p>"[Placeholder quote — a third piece of feedback goes here.]"</p>
+          <div class="review-name">Reader Name</div>
+          <div class="review-role">Community Member, Focus Group</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== FAQ ===================== -->
+<div class="page" id="page-faq">
+  <section style="padding-top:70px;">
+    <div class="wrap-narrow">
+      <div class="sec-head">
+        <div class="sec-eyebrow">Questions</div>
+        <h2>Frequently Asked Questions</h2>
+      </div>
+      <div id="faq-list">
+        <div class="faq-item">
+          <div class="faq-q"><span>Is this book fiction or nonfiction?</span><span class="plus">+</span></div>
+          <div class="faq-a">It's a nonfiction book on emotional well-being, structured around twelve Islamic values — each explored through a fictional story that reflects everyday life.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>Who is this book for?</span><span class="plus">+</span></div>
+          <div class="faq-a">Anyone striving to live with more intention — students, professionals, parents, caregivers, homemakers, and community members alike.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>Where can I buy it?</span><span class="plus">+</span></div>
+          <div class="faq-a">The book will be available on Amazon. Sign up on the Contact page to be notified the moment it's live.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>When is the launch date?</span><span class="plus">+</span></div>
+          <div class="faq-a">The manuscript is in its final review and editing stage. We're aiming for launch within the next few months — join the list for the exact date.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>Will there be an ebook version?</span><span class="plus">+</span></div>
+          <div class="faq-a">[Placeholder — confirm format(s): print, ebook, or both.]</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== CONTACT ===================== -->
+<div class="page" id="page-contact">
+  <section class="signup" style="padding-top:70px;">
+    <div class="wrap-narrow">
+      <div class="sec-eyebrow" style="color: var(--terracotta);">Stay Connected</div>
+      <h2>Be the First to Know</h2>
+      <p class="sec-sub">Join the list for the launch date, the first excerpt, and early access before it hits Amazon.</p>
+      <div class="kit-form-wrap">
+        <script async data-uid="a10c6e87b9" src="https://elevateme-4.kit.com/a10c6e87b9/index.js"></script>
+      </div>
+      <div class="form-note">No spam — just launch updates.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-eyebrow">Get In Touch</div>
+        <h2>Other Ways to Reach Out</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="icon">✉️</div>
+          <div class="lbl">Email</div>
+          <a href="#">[your email here]</a>
+        </div>
+        <div class="contact-card">
+          <div class="icon">📷</div>
+          <div class="lbl">Instagram</div>
+          <a href="#">[your @handle here]</a>
+        </div>
+        <div class="contact-card">
+          <div class="icon">📖</div>
+          <div class="lbl">Where to Buy</div>
+          <a href="#">Coming soon on Amazon</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="brand display">Tomorrow Is a Practice</div>
+  <div class="tagline">Practicing Islamic Values, Every Day</div>
+  <div class="fnav">
+    <a data-page="home">Home</a>
+    <a data-page="book">The Book</a>
+    <a data-page="author">Author</a>
+    <a data-page="sample">Sample</a>
+    <a data-page="read">Read</a>
+    <a data-page="reviews">Reviews</a>
+    <a data-page="faq">FAQ</a>
+    <a data-page="contact">Contact</a>
+  </div>
+  <div class="copyright">© 2026. All rights reserved.</div>
+</footer>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="assets/js/main.js" defer></script>
+
+</body>
+</html>
