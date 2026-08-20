@@ -1,392 +1,246 @@
-:root{
-    --cream: #F2EBDC;
-    --cream-deep: #E9DFC9;
-    --navy: #1E2C46;
-    --navy-soft: #2C3C5C;
-    --terracotta: #C56B4E;
-    --terracotta-deep: #A8543A;
-    --gold: #A9824C;
-    --green: #2C3B2E;
-    --ink: #23201A;
-    --paper: #FBF8F1;
-  }
+* { box-sizing: border-box; }
 
-  *{ box-sizing: border-box; margin:0; padding:0; }
+body {
+  margin: 0;
+  background: #fbfaf5;
+  font-family: 'Cormorant Garamond', serif;
+  color: #232e1d;
+}
 
-  html{ scroll-behavior: smooth; }
+a { color: #7c5a22; }
+a:hover { color: #a3793a; }
 
-  body{
-    background: var(--cream);
-    color: var(--ink);
-    font-family: 'Lora', serif;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
+.cta:hover { background: #a3793a !important; }
+.cta-outline:hover { background: rgba(163,121,58,0.12) !important; }
+.cta-buy:hover { background: #d9b878 !important; }
+.cta-sample:hover { background: rgba(201,164,92,0.15) !important; }
 
-  .display{
-    font-family: 'Bodoni Moda', serif;
-    font-optical-sizing: auto;
-  }
+/* ---- Menu-controlled sections ----
+   Only the section matching the current nav choice is shown; everything
+   else is hidden. main.js toggles the .is-active class based on the URL
+   hash (e.g. #inside, #how) and defaults to #home. */
+.page {
+  display: none;
+}
 
-  .label{
-    font-family: 'Jost', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    font-weight: 500;
-  }
+.page.is-active {
+  display: block;
+}
 
-  a{ color: inherit; text-decoration: none; }
+.nav-link.is-current {
+  color: #a3793a;
+}
 
-  img{ max-width: 100%; display:block; }
+.nav-link.cta.is-current {
+  color: #f5f1e2;
+}
 
-  /* ---------- NAV ---------- */
-  header{
-    position: sticky; top:0; z-index: 100;
-    background: var(--cream);
-    border-bottom: 1px solid rgba(30,44,70,0.12);
-  }
-  .nav-inner{
-    max-width: 1180px; margin: 0 auto;
-    display:flex; align-items:center; justify-content: space-between;
-    padding: 18px 32px;
-  }
-  .brand{
-    font-family:'Bodoni Moda', serif;
-    font-weight: 600;
-    font-size: 1.15rem;
-    letter-spacing: 0.02em;
-    color: var(--navy);
-  }
-  nav ul{
-    list-style:none; display:flex; gap: 28px;
-  }
-  nav a{
-    font-family:'Jost', sans-serif;
-    font-size: 0.82rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--navy);
-    padding: 6px 2px;
-    border-bottom: 2px solid transparent;
-    cursor:pointer;
-    transition: border-color .2s ease, color .2s ease;
-  }
-  nav a:hover, nav a.active{
-    border-bottom-color: var(--terracotta);
-    color: var(--terracotta-deep);
-  }
-  .nav-toggle{ display:none; }
+/* ---- Subscribe form ----
+   A plain HTML form we own outright — no injected script, no competing
+   stylesheet, no specificity fights. It posts straight to Kit's
+   subscription endpoint (handled in main.js) and never leaves this page. */
+.subscribe-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  max-width: 560px;
+  margin: 0 auto;
+}
 
-  @media (max-width: 860px){
-    nav ul{
-      position: fixed; top: 64px; left:0; right:0;
-      background: var(--paper);
-      flex-direction: column; gap:0;
-      padding: 8px 0 20px;
-      transform: translateY(-120%);
-      transition: transform .25s ease;
-      border-bottom: 1px solid rgba(30,44,70,0.12);
-    }
-    nav ul.open{ transform: translateY(0); }
-    nav a{ display:block; padding: 12px 32px; }
-    .nav-toggle{
-      display:block; background:none; border:none; cursor:pointer;
-      font-family:'Jost',sans-serif; font-size:0.8rem; letter-spacing:0.1em;
-      text-transform:uppercase; color:var(--navy);
-    }
-  }
+.subscribe-input {
+  flex: 1;
+  min-width: 260px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  color: #232e1d;
+  background: #fbfaf5;
+  border: 1.5px solid #a3793a;
+  border-radius: 0;
+  padding: 14px 20px;
+}
 
-  /* ---------- SECTIONS / PAGES ---------- */
-  .page{ display:none; }
-  .page.active{ display:block; animation: fadein .35s ease; }
-  @keyframes fadein{ from{opacity:0; transform: translateY(6px);} to{opacity:1; transform:none;} }
+.subscribe-input::placeholder {
+  color: rgba(35, 46, 29, 0.45);
+}
 
-  section{ padding: 88px 32px; }
-  .wrap{ max-width: 1180px; margin: 0 auto; }
-  .wrap-narrow{ max-width: 760px; margin: 0 auto; }
+.subscribe-input:focus {
+  outline: 2px solid #a3793a;
+  outline-offset: 2px;
+}
 
-  .rule{
-    height:1px; background: var(--gold); opacity:.55; width:100%;
-  }
-  .triad{
-    display:flex; flex-wrap:wrap; gap: 14px 28px; justify-content:center;
-    font-family:'Jost', sans-serif; font-size: 0.78rem; letter-spacing:0.12em;
-    text-transform: uppercase; color: var(--navy-soft);
-  }
-  .triad span:not(:last-child)::after{
-    content:'·'; margin-left:28px; color: var(--gold);
-  }
+.subscribe-button {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  letter-spacing: 2.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: #7c5a22;
+  color: #f5f1e2;
+  border: none;
+  border-radius: 0;
+  padding: 14px 34px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
 
-  /* ---------- HERO ---------- */
-  .hero{
-    background: linear-gradient(180deg, var(--cream) 0%, var(--cream-deep) 100%);
-  }
-  .hero-grid{
-    display:grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items:center;
-  }
-  .eyebrow{
-    font-family:'Jost', sans-serif; font-size:0.8rem; letter-spacing:0.18em;
-    text-transform:uppercase; color: var(--terracotta-deep); margin-bottom:14px;
-  }
-  .eyebrow-sub{
-    font-family:'Jost', sans-serif; font-size:0.72rem; letter-spacing:0.12em;
-    text-transform:uppercase; color: var(--navy-soft); margin-bottom: 22px;
-  }
-  h1.hero-title{
-    font-size: clamp(3rem, 7vw, 5.4rem);
-    line-height: 0.96;
-    color: var(--navy);
-    font-weight: 500;
-    letter-spacing: -0.01em;
-  }
-  h1.hero-title .accent{
-    color: var(--terracotta);
-    font-weight: 700;
-    display:block;
-    font-size: 1.12em;
-  }
-  .hero-tagline{
-    margin-top: 26px; font-size: 1.1rem; max-width: 46ch; color: var(--navy-soft);
-  }
-  .cta-row{ display:flex; gap:16px; margin-top: 36px; flex-wrap:wrap; }
-  .btn{
-    font-family:'Jost',sans-serif; font-size:0.85rem; letter-spacing:0.06em;
-    padding: 15px 30px; border-radius: 2px; cursor:pointer; border:1px solid transparent;
-    transition: transform .15s ease, box-shadow .15s ease;
-  }
-  .btn:hover{ transform: translateY(-1px); }
-  .btn-primary{ background: var(--terracotta); color: var(--paper); }
-  .btn-primary:hover{ box-shadow: 0 8px 20px rgba(197,107,78,0.35); }
-  .btn-ghost{ background: transparent; border-color: var(--navy); color: var(--navy); }
-  .btn-ghost:hover{ background: var(--navy); color: var(--paper); }
+.subscribe-button:hover,
+.subscribe-button:focus-visible {
+  background: #a3793a;
+}
 
-  .cover-frame{
-    position: relative;
-  }
-  .cover-frame img{
-    border-radius: 3px;
-    box-shadow: 0 30px 60px -20px rgba(30,44,70,0.45);
-  }
-  .badge-soon{
-    position:absolute; top:-14px; right:-14px;
-    background: var(--navy); color: var(--cream);
-    font-family:'Jost',sans-serif; font-size:0.68rem; letter-spacing:0.1em;
-    text-transform:uppercase; padding: 10px 16px; border-radius: 2px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  }
+.subscribe-button:disabled {
+  background: #b7a688;
+  cursor: default;
+}
 
-  .pullquote{
-    text-align:center; padding: 70px 32px;
-    background: var(--navy); color: var(--cream);
-  }
-  .pullquote .rule{ background: var(--gold); max-width: 60px; margin: 0 auto 30px; }
-  .pullquote p{
-    font-family:'Bodoni Moda', serif; font-weight:500;
-    font-size: clamp(1.4rem, 3vw, 2.1rem); line-height:1.4;
-  }
-  .pullquote .em{ color: var(--terracotta); font-style: italic; }
+.subscribe-message {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 20px auto 0;
+  max-width: 560px;
+}
 
-  /* ---------- SECTION HEADS ---------- */
-  .sec-head{ text-align:center; margin-bottom: 56px; }
-  .sec-eyebrow{
-    font-family:'Jost',sans-serif; font-size:0.78rem; letter-spacing:0.16em;
-    text-transform:uppercase; color: var(--terracotta-deep); margin-bottom:12px;
-  }
-  h2{
-    font-family:'Bodoni Moda', serif; font-weight:500;
-    font-size: clamp(2rem, 4vw, 2.9rem); color: var(--navy);
-  }
-  .sec-sub{ max-width: 62ch; margin: 16px auto 0; color: var(--navy-soft); }
+.subscribe-message.success { color: #38462f; }
+.subscribe-message.error { color: #8a3a24; }
 
-  /* ---------- ABOUT BOOK ---------- */
-  .book-grid{
-    display:grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items:start;
-  }
-  .book-grid p{ margin-bottom: 18px; color: #3a3428; }
-  .stat-row{ display:flex; gap: 34px; margin-top: 30px; flex-wrap:wrap; }
-  .stat{ }
-  .stat .num{ font-family:'Bodoni Moda',serif; font-size:2.1rem; color: var(--terracotta); font-weight:600; }
-  .stat .lbl{ font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color: var(--navy-soft); }
+/* ---- PDF reader overlay ----
+   A full-screen overlay that sits above everything else when a ?read=
+   link is opened. Renders pages to a <canvas> via PDF.js rather than an
+   <iframe>/<embed>, so there's no native browser PDF toolbar (no built-in
+   download or print button) and no direct link to the raw file to share.
 
-  /* ---------- VALUES ---------- */
-  .values-wrap{ background: var(--paper); }
-  .values-grid{
-    display:grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr));
-    gap: 2px; background: rgba(30,44,70,0.12); border: 1px solid rgba(30,44,70,0.12);
-  }
-  .value-card{
-    background: var(--paper); padding: 30px 26px; min-height: 190px;
-    display:flex; flex-direction:column; justify-content:space-between;
-  }
-  .value-card .ar{
-    font-size: 1.7rem; color: var(--green); font-family: 'Bodoni Moda', serif;
-  }
-  .value-card .tr{
-    font-family:'Jost',sans-serif; text-transform:uppercase; letter-spacing:0.1em;
-    font-size:0.72rem; color: var(--terracotta-deep); margin-top: 14px;
-  }
-  .value-card .en{
-    font-family:'Bodoni Moda', serif; font-size:1.2rem; color: var(--navy); margin-top:4px;
-  }
-  .value-card .desc{ font-size:0.9rem; color:#5a5240; margin-top:12px; }
-  .value-card.tbd{ opacity:0.55; justify-content:center; align-items:center; text-align:center; }
-  .value-card.tbd .en{ font-size:0.85rem; text-transform:uppercase; letter-spacing:0.08em; font-family:'Jost',sans-serif; color: var(--navy-soft); }
+   NOTE: setting `display` via a class (below) silently overrides the
+   browser's default handling of the `hidden` attribute, since author CSS
+   always wins over the UA default for [hidden]. Without the override rule
+   right below, these elements would show on every page load regardless of
+   the `hidden` attribute JS sets/removes — this rule keeps `hidden` in
+   control. */
+.pdf-reader-overlay[hidden],
+.pdf-reader-viewport[hidden],
+.pdf-reader-controls[hidden],
+.pdf-reader-status[hidden] {
+  display: none !important;
+}
 
-  /* ---------- AUTHOR ---------- */
-  .author-wrap{ display:grid; grid-template-columns: 0.8fr 1.2fr; gap: 60px; align-items:center; }
-  .author-photo{
-    aspect-ratio: 4/5; background: var(--cream-deep);
-    border: 1px solid rgba(30,44,70,0.15);
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Jost',sans-serif; font-size:0.78rem; letter-spacing:0.08em;
-    text-transform:uppercase; color: var(--navy-soft); text-align:center; padding: 20px;
-  }
-  .author-bio p{ margin-bottom:16px; color:#3a3428; }
-  .tag-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
-  .tag{
-    font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.06em;
-    text-transform:uppercase; padding: 8px 14px; border:1px solid var(--navy);
-    color: var(--navy); border-radius: 20px;
-  }
+.pdf-reader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #fbfaf5;
+  display: flex;
+  flex-direction: column;
+}
 
-  /* ---------- SAMPLE ---------- */
-  .sample-box{
-    background: var(--paper); border: 1px solid rgba(30,44,70,0.15);
-    padding: 50px; position:relative;
-  }
-  .sample-box::before{
-    content:'\201C'; font-family:'Bodoni Moda',serif; font-size: 6rem; color: var(--terracotta);
-    position:absolute; top:-6px; left:24px; opacity:0.5;
-  }
-  .sample-box .chapter-tag{
-    font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.12em;
-    text-transform:uppercase; color: var(--terracotta-deep); margin-bottom:18px; display:block;
-  }
-  .sample-box p{ color:#3a3428; margin-bottom:16px; }
-  .sample-box .placeholder-note{
-    margin-top: 24px; padding-top:20px; border-top:1px dashed rgba(30,44,70,0.25);
-    font-family:'Jost',sans-serif; font-size:0.78rem; color: var(--navy-soft); font-style:italic;
-  }
+.pdf-reader-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+  border-bottom: 1px solid rgba(163, 121, 58, 0.4);
+  flex: none;
+}
 
-  /* ---------- REVIEWS ---------- */
-  .review-grid{
-    display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 24px;
-  }
-  .review-card{
-    background: var(--paper); border:1px solid rgba(30,44,70,0.12);
-    padding: 30px; border-top: 3px solid var(--gold);
-  }
-  .review-card p{ color:#3a3428; font-style:italic; margin-bottom:16px; }
-  .review-name{ font-family:'Jost',sans-serif; font-size:0.78rem; letter-spacing:0.06em; color: var(--navy); text-transform:uppercase; }
-  .review-role{ font-family:'Jost',sans-serif; font-size:0.72rem; color: var(--navy-soft); margin-top:2px; }
+.pdf-reader-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #232e1d;
+}
 
-  /* ---------- FAQ ---------- */
-  .faq-item{
-    border-bottom: 1px solid rgba(30,44,70,0.15); padding: 22px 0;
-  }
-  .faq-q{
-    display:flex; justify-content:space-between; align-items:center; cursor:pointer;
-    font-family:'Bodoni Moda',serif; font-size:1.15rem; color: var(--navy);
-  }
-  .faq-q .plus{ color: var(--terracotta); font-size:1.3rem; transition: transform .2s ease; }
-  .faq-item.open .plus{ transform: rotate(45deg); }
-  .faq-a{
-    max-height:0; overflow:hidden; transition: max-height .3s ease;
-    color:#3a3428; font-size:0.95rem;
-  }
-  .faq-item.open .faq-a{ max-height: 240px; padding-top:14px; }
+.pdf-reader-close {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  color: #7c5a22;
+  text-decoration: none;
+}
 
-  /* ---------- SIGNUP ---------- */
-  .signup{
-    background: var(--navy); color: var(--cream); text-align:center;
-  }
-  .signup h2{ color: var(--cream); }
-  .signup .sec-sub{ color: rgba(242,235,220,0.75); }
-  .signup-form{
-    display:flex; gap:12px; max-width: 460px; margin: 32px auto 0; flex-wrap:wrap; justify-content:center;
-  }
-  .signup-form input{
-    flex:1; min-width: 220px; padding: 15px 18px; border:1px solid rgba(242,235,220,0.35);
-    background: rgba(242,235,220,0.06); color: var(--cream); font-family:'Lora',serif; font-size:0.95rem;
-    border-radius: 2px;
-  }
-  .signup-form input::placeholder{ color: rgba(242,235,220,0.5); }
-  .kit-form-wrap{ max-width: 460px; margin: 32px auto 0; }
-  .form-note{ font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.05em; color: rgba(242,235,220,0.55); margin-top:16px; }
+.pdf-reader-close:hover {
+  color: #a3793a;
+}
 
-  /* ---------- CONTACT ---------- */
-  .contact-grid{
-    display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 30px; text-align:center;
-  }
-  .contact-card{ padding: 34px 20px; background: var(--paper); border:1px solid rgba(30,44,70,0.12); }
-  .contact-card .icon{ font-size: 1.6rem; margin-bottom:14px; }
-  .contact-card .lbl{ font-family:'Jost',sans-serif; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color: var(--navy-soft); margin-bottom:8px; }
-  .contact-card a{ color: var(--terracotta-deep); }
+.pdf-reader-status {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: #38462f;
+  text-align: center;
+  padding: 120px 32px;
+}
 
-  /* ---------- READ / PDF VIEWER ---------- */
-  .doc-grid{
-    display:grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr));
-    gap: 2px; background: rgba(30,44,70,0.12); border: 1px solid rgba(30,44,70,0.12);
-  }
-  .doc-card{
-    background: var(--paper); padding: 28px 26px; cursor:pointer; text-align:left;
-    transition: background .2s ease;
-  }
-  .doc-card:hover{ background: var(--cream-deep); }
-  .doc-card .doc-eyebrow{ font-family:'Jost',sans-serif; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color: var(--terracotta-deep); margin-bottom:10px; }
-  .doc-card .doc-title{ font-family:'Bodoni Moda',serif; font-size:1.2rem; color: var(--navy); }
-  .doc-card .doc-sub{ font-size:0.88rem; color: var(--navy-soft); margin-top:8px; }
-  .doc-card .doc-cta{ margin-top:16px; font-family:'Jost',sans-serif; font-size:0.78rem; letter-spacing:0.06em; color: var(--terracotta-deep); }
+.pdf-reader-status.error {
+  color: #8a3a24;
+}
 
-  .read-back{
-    display:inline-flex; align-items:center; gap:8px; font-family:'Jost',sans-serif;
-    font-size:0.85rem; letter-spacing:0.04em; color: var(--navy); cursor:pointer; margin-bottom: 28px;
-  }
-  .read-back:hover{ color: var(--terracotta-deep); }
+.pdf-reader-viewport {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  padding: 32px;
+}
 
-  .pdf-shell{
-    background: var(--navy); border-radius: 3px; padding: 40px 20px;
-    user-select: none; -webkit-user-select: none;
-  }
-  .pdf-shell .pdf-title-bar{
-    text-align:center; color: var(--cream); font-family:'Bodoni Moda',serif; font-size:1.3rem;
-    margin-bottom: 24px; padding: 0 20px;
-  }
-  .pdf-pages{ display:flex; flex-direction:column; align-items:center; gap: 22px; }
-  .pdf-page-wrap{ position:relative; max-width:100%; box-shadow: 0 20px 50px -20px rgba(0,0,0,0.6); border-radius: 2px; overflow:hidden; }
-  .pdf-page-wrap canvas{ display:block; max-width:100%; height:auto; pointer-events:none; }
-  .pdf-watermark{
-    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-    pointer-events:none; overflow:hidden;
-  }
-  .pdf-watermark span{
-    font-family:'Jost',sans-serif; font-weight:600; font-size: 1.4rem; color: rgba(30,44,70,0.14);
-    transform: rotate(-28deg); white-space:nowrap; text-transform:uppercase; letter-spacing:0.1em;
-  }
-  .pdf-status{
-    text-align:center; color: rgba(242,235,220,0.65); font-family:'Jost',sans-serif; font-size:0.9rem; padding: 40px 20px;
-  }
-  .pdf-note{
-    margin-top: 26px; text-align:center; font-family:'Jost',sans-serif; font-size:0.75rem;
-    color: rgba(242,235,220,0.5);
-  }
+.pdf-reader-canvas-wrap {
+  position: relative;
+  box-shadow: 0 20px 45px rgba(35, 46, 29, 0.25);
+  height: fit-content;
+}
 
-  /* ---------- FOOTER ---------- */
-  footer{
-    background: var(--green); color: var(--cream); text-align:center; padding: 50px 32px 34px;
-  }
-  footer .brand{ color: var(--cream); font-size:1.3rem; }
-  footer .tagline{ font-family:'Jost',sans-serif; font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase; color: rgba(242,235,220,0.6); margin-top:6px; }
-  footer .fnav{ margin-top: 26px; display:flex; gap:22px; justify-content:center; flex-wrap:wrap; }
-  footer .fnav a{ font-family:'Jost',sans-serif; font-size:0.78rem; letter-spacing:0.05em; text-transform:uppercase; color: rgba(242,235,220,0.75); cursor:pointer; }
-  footer .fnav a:hover{ color: var(--terracotta); }
-  footer .copyright{ margin-top:26px; font-size:0.72rem; color: rgba(242,235,220,0.4); font-family:'Jost',sans-serif; }
+.pdf-reader-canvas-wrap canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
 
-  @media (max-width: 860px){
-    .hero-grid{ grid-template-columns: 1fr; }
-    .cover-frame{ order:-1; max-width: 340px; margin: 0 auto; }
-    .book-grid{ grid-template-columns: 1fr; }
-    .author-wrap{ grid-template-columns: 1fr; }
-    .author-photo{ max-width: 260px; margin: 0 auto; }
-    section{ padding: 60px 22px; }
-  }
+/* Repeating diagonal watermark drawn over the page — a deterrent, not a
+   guarantee; anyone with dev tools or a screenshot can still get around it.
+   Built as a tiled SVG background so it repeats across the whole page
+   rather than sitting as one line in the middle. */
+.pdf-reader-watermark {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  background-repeat: repeat;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='200'%3E%3Ctext x='170' y='100' font-family='Georgia, serif' font-size='13' fill='rgba(35,46,29,0.10)' text-anchor='middle' transform='rotate(-28 170 100)'%3ETOMORROW TAKES PRACTICE%3C/text%3E%3C/svg%3E");
+}
+
+.pdf-reader-controls {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 18px;
+  border-top: 1px solid rgba(163, 121, 58, 0.4);
+}
+
+.pdf-reader-nav-button {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: #7c5a22;
+  color: #f5f1e2;
+  border: none;
+  padding: 10px 22px;
+  cursor: pointer;
+}
+
+.pdf-reader-nav-button:hover:not(:disabled) {
+  background: #a3793a;
+}
+
+.pdf-reader-nav-button:disabled {
+  background: #cdbfa2;
+  cursor: default;
+}
+
+.pdf-reader-page-indicator {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  color: #38462f;
+}
