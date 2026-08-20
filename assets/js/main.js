@@ -1,159 +1,233 @@
-// ============================================================
-  // READ / PDF VIEWER
-  //
-  // HOW TO ADD A NEW CHAPTER:
-  // 1. Host the PDF somewhere with a direct file link (your own
-  //    server, an S3/Cloud bucket, etc.).
-  // 2. Add an entry to READ_LIBRARY below with a short id, title,
-  //    subtitle, and the direct PDF url.
-  // 3. Share a link like: yoursite.com/index.html?read=sabr-ch3
-  //    That link opens THIS SAME PAGE and loads that file — no new
-  //    page needed per chapter.
-  //
-  // Ad-hoc fallback (skips the library entirely):
-  //   yoursite.com/index.html?src=https://yourhost.com/file.pdf&title=Chapter%20Name
-  // ============================================================
+// Menu-controlled sections: show only the .page whose id matches the URL
+// hash, hide the rest, and highlight the matching nav link. Defaults to
+// #home when there's no hash (or an unrecognized one).
 
-  const READ_LIBRARY = {
-    'sample-sabr': {
-      title: 'Chapter — Sabr (Patience)',
-      subtitle: 'A first look at the book, in full.',
-      url: '' // paste a direct PDF link here
-    }
-    // Add more entries here, e.g.:
-    // 'ch1-tafakkur': { title: 'Chapter 1 — Tafakkur', subtitle: 'Reflection', url: 'https://...' }
-  };
+(function () {
+  var DEFAULT_PAGE = 'home';
 
-  if (window.pdfjsLib) {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  function currentPageId() {
+    var hash = window.location.hash.replace('#', '');
+    var page = document.getElementById(hash);
+    return page && page.classList.contains('page') ? hash : DEFAULT_PAGE;
   }
 
-  function renderDocGrid(){
-    const grid = document.getElementById('doc-grid');
-    const ids = Object.keys(READ_LIBRARY);
-    if (ids.length === 0){
-      grid.innerHTML = '<p style="color:var(--navy-soft); grid-column:1/-1; text-align:center; padding: 30px;">No chapters posted yet — check back soon.</p>';
-      return;
-    }
-    grid.innerHTML = ids.map(id => {
-      const d = READ_LIBRARY[id];
-      return `<div class="doc-card" onclick="openDocById('${id}')">
-        <div class="doc-eyebrow">Chapter</div>
-        <div class="doc-title">${d.title}</div>
-        <div class="doc-sub">${d.subtitle || ''}</div>
-        <div class="doc-cta">Read now &rarr;</div>
-      </div>`;
-    }).join('');
-  }
-
-  function openDocById(id){
-    const d = READ_LIBRARY[id];
-    if (!d || !d.url){
-      alert('This chapter link hasn\'t been connected yet.');
-      return;
-    }
-    openViewer(d.url, d.title);
-    history.pushState({}, '', '?read=' + encodeURIComponent(id));
-  }
-
-  function closeViewer(){
-    document.getElementById('read-viewer').style.display = 'none';
-    document.getElementById('read-library').style.display = 'block';
-    history.pushState({}, '', location.pathname);
-  }
-
-  async function openViewer(url, title){
-    goTo('read');
-    document.getElementById('read-library').style.display = 'none';
-    document.getElementById('read-viewer').style.display = 'block';
-    document.getElementById('pdf-title-bar').textContent = title || 'Reading';
-    const pagesEl = document.getElementById('pdf-pages');
-    pagesEl.innerHTML = '<div class="pdf-status" id="pdf-status">Loading document…</div>';
-
-    if (!window.pdfjsLib){
-      pagesEl.innerHTML = '<div class="pdf-status">Viewer failed to load. Check your connection and try again.</div>';
-      return;
-    }
-
-    try{
-      const loadingTask = pdfjsLib.getDocument(url);
-      const pdf = await loadingTask.promise;
-      pagesEl.innerHTML = '';
-      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++){
-        const page = await pdf.getPage(pageNum);
-        const scale = 1.5;
-        const viewport = page.getViewport({ scale });
-
-        const wrap = document.createElement('div');
-        wrap.className = 'pdf-page-wrap';
-
-        const canvas = document.createElement('canvas');
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-        const ctx = canvas.getContext('2d');
-
-        await page.render({ canvasContext: ctx, viewport }).promise;
-
-        const watermark = document.createElement('div');
-        watermark.className = 'pdf-watermark';
-        watermark.innerHTML = '<span>Preview Copy — Not for Distribution</span>';
-
-        wrap.appendChild(canvas);
-        wrap.appendChild(watermark);
-        pagesEl.appendChild(wrap);
-      }
-    } catch (err){
-      pagesEl.innerHTML = '<div class="pdf-status">This document couldn\'t be loaded. Double-check the file link.</div>';
-      console.error(err);
-    }
-  }
-
-  // Block right-click / context menu and common save-print shortcuts
-  // inside the reader. Note: this deters casual saving but is not a
-  // true DRM guarantee — see caveat in chat.
-  document.addEventListener('contextmenu', function(e){
-    if (e.target.closest('#page-read')) e.preventDefault();
-  });
-  document.addEventListener('keydown', function(e){
-    const readerOpen = document.getElementById('page-read').classList.contains('active');
-    if (!readerOpen) return;
-    const key = e.key.toLowerCase();
-    if ((e.ctrlKey || e.metaKey) && (key === 's' || key === 'p')){
-      e.preventDefault();
-    }
-  });
-
-  // On load: check for ?read=id or ?src=url&title=... and jump straight to it
-  function initReadRouting(){
-    renderDocGrid();
-    const params = new URLSearchParams(location.search);
-    const readId = params.get('read');
-    const src = params.get('src');
-    if (readId && READ_LIBRARY[readId]){
-      openDocById(readId);
-    } else if (src){
-      openViewer(decodeURIComponent(src), params.get('title') ? decodeURIComponent(params.get('title')) : 'Reading');
-    }
-  }
-  window.addEventListener('DOMContentLoaded', initReadRouting);
-
-  function goTo(id){
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + id).classList.add('active');
-    document.querySelectorAll('nav a').forEach(a => a.classList.toggle('active', a.dataset.page === id));
-    document.querySelector('nav ul').classList.remove('open');
-    window.scrollTo({top:0, behavior:'smooth'});
-  }
-  document.querySelectorAll('[data-page]').forEach(el => {
-    el.addEventListener('click', () => {
-      goTo(el.dataset.page);
-      if (el.dataset.page === 'read'){
-        document.getElementById('read-viewer').style.display = 'none';
-        document.getElementById('read-library').style.display = 'block';
-        history.pushState({}, '', location.pathname);
-      }
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(function (section) {
+      section.classList.toggle('is-active', section.id === id);
     });
+    document.querySelectorAll('.nav-link').forEach(function (link) {
+      link.classList.toggle('is-current', link.getAttribute('data-page') === id);
+    });
+    window.scrollTo(0, 0);
+  }
+
+  window.addEventListener('hashchange', function () {
+    showPage(currentPageId());
   });
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+
+  document.addEventListener('DOMContentLoaded', function () {
+    showPage(currentPageId());
   });
+})();
+
+// ---- Subscribe form ----
+// Posts straight to Kit's subscription endpoint with fetch (no page
+// navigation), and shows an inline message. Kit's plain-form endpoint
+// doesn't return a readable response due to CORS, so success is assumed
+// once the request completes without a network error — check your Kit
+// dashboard's subscriber list after testing to confirm it's landing.
+//
+// ⚠️ Replace KIT_FORM_ID below with your form's numeric ID (not the
+// "a10c6e87b9" uid used for the old embed script). Find it in Kit:
+// Grow → Landing Pages & Forms → open the form → the URL in your browser's
+// address bar will contain a number, e.g. app.kit.com/forms/1234567/edit
+// — 1234567 is the ID you need.
+
+(function () {
+    var KIT_FORM_ID = '9810442';
+  var ENDPOINT = 'https://app.kit.com/forms/' + KIT_FORM_ID + '/subscriptions';
+
+  var form = document.getElementById('subscribeForm');
+  if (!form) return;
+
+  var emailInput = document.getElementById('subscribeEmail');
+  var button = form.querySelector('.subscribe-button');
+  var message = document.getElementById('subscribeMessage');
+
+  function showMessage(text, type) {
+    message.textContent = text;
+    message.className = 'subscribe-message ' + type;
+    message.hidden = false;
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    if (KIT_FORM_ID === 'REPLACE_WITH_YOUR_FORM_ID') {
+      showMessage('Form isn\u2019t connected yet \u2014 add your Kit form ID in main.js.', 'error');
+      return;
+    }
+
+    var email = emailInput.value.trim();
+    if (!email) return;
+
+    button.disabled = true;
+    button.textContent = 'SUBSCRIBING\u2026';
+
+    var body = new FormData();
+    body.append('email_address', email);
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: body
+    })
+      .then(function () {
+        showMessage('Thanks \u2014 check your inbox to confirm.', 'success');
+        form.reset();
+      })
+      .catch(function () {
+        showMessage('Something went wrong. Please try again.', 'error');
+      })
+      .finally(function () {
+        button.disabled = false;
+        button.textContent = 'SUBSCRIBE';
+      });
+  });
+})();
+
+// ---- PDF reader ----
+// A link like yoursite.com/?read=chapter-3 loads assets/files/chapter-3.pdf
+// and renders it in a full-screen canvas-based viewer — no new page to
+// build, no list to maintain. Adding a chapter is just dropping the PDF
+// into assets/files/ with the filename you want in the link.
+//
+// This deters casual downloading (no native PDF toolbar, no visible link
+// to the raw file, right-click and Ctrl+S/Ctrl+P are blocked) but can't
+// stop someone determined — screenshots or browser dev tools still work
+// around it. True lock-down would need a backend serving authenticated,
+// temporary links instead of a public static file.
+
+(function () {
+  var FILES_PATH = 'assets/files/';
+  var SLUG_PATTERN = /^[a-zA-Z0-9_-]+$/;
+
+  var params = new URLSearchParams(window.location.search);
+  var slug = params.get('read');
+  if (!slug) return;
+
+  if (!SLUG_PATTERN.test(slug)) {
+    return; // ignore malformed values rather than attempting a fetch
+  }
+
+  if (typeof pdfjsLib === 'undefined') {
+    return; // PDF.js failed to load (e.g. offline) — reader just won't open
+  }
+
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  var overlay = document.getElementById('pdfReaderOverlay');
+  var titleEl = document.getElementById('pdfReaderTitle');
+  var statusEl = document.getElementById('pdfReaderStatus');
+  var viewport = document.getElementById('pdfReaderViewport');
+  var controls = document.getElementById('pdfReaderControls');
+  var canvas = document.getElementById('pdfReaderCanvas');
+  var watermark = overlay.querySelector('.pdf-reader-watermark');
+  var prevBtn = document.getElementById('pdfPrevPage');
+  var nextBtn = document.getElementById('pdfNextPage');
+  var pageIndicator = document.getElementById('pdfPageIndicator');
+
+  var pdfDoc = null;
+  var currentPage = 1;
+  var rendering = false;
+
+  function showStatus(text, isError) {
+    statusEl.hidden = false;
+    statusEl.textContent = text;
+    statusEl.className = 'pdf-reader-status' + (isError ? ' error' : '');
+    viewport.hidden = true;
+    controls.hidden = true;
+  }
+
+  function renderPage(num) {
+    if (rendering) return;
+    rendering = true;
+
+    pdfDoc.getPage(num).then(function (page) {
+      var containerWidth = viewport.clientWidth - 64;
+      var baseViewport = page.getViewport({ scale: 1 });
+      var scale = Math.min(1.4, containerWidth / baseViewport.width);
+      var scaledViewport = page.getViewport({ scale: scale });
+
+      canvas.width = scaledViewport.width;
+      canvas.height = scaledViewport.height;
+      watermark.style.width = scaledViewport.width + 'px';
+      watermark.style.height = scaledViewport.height + 'px';
+
+      var ctx = canvas.getContext('2d');
+      page.render({ canvasContext: ctx, viewport: scaledViewport }).promise
+        .then(function () {
+          rendering = false;
+          currentPage = num;
+          pageIndicator.textContent = 'Page ' + currentPage + ' of ' + pdfDoc.numPages;
+          prevBtn.disabled = currentPage <= 1;
+          nextBtn.disabled = currentPage >= pdfDoc.numPages;
+          viewport.scrollTop = 0;
+        })
+        .catch(function (err) {
+          rendering = false;
+          showStatus('This page couldn\u2019t be displayed. If you\u2019re testing from a local file (file://), try serving the folder from a local web server instead \u2014 PDF rendering needs http/https to work. Error: ' + (err && err.message ? err.message : err), true);
+        });
+    });
+  }
+
+  function openReader() {
+    document.body.style.overflow = 'hidden';
+    overlay.hidden = false;
+    showStatus('Loading chapter\u2026', false);
+
+    pdfjsLib.getDocument(FILES_PATH + slug + '.pdf').promise
+      .then(function (doc) {
+        pdfDoc = doc;
+        statusEl.hidden = true;
+        viewport.hidden = false;
+        controls.hidden = false;
+        renderPage(1);
+      })
+      .catch(function () {
+        showStatus('This chapter link isn\u2019t available. Please check the link you were sent.', true);
+      });
+  }
+
+  prevBtn.addEventListener('click', function () {
+    if (pdfDoc && currentPage > 1) renderPage(currentPage - 1);
+  });
+
+  nextBtn.addEventListener('click', function () {
+    if (pdfDoc && currentPage < pdfDoc.numPages) renderPage(currentPage + 1);
+  });
+
+  document.getElementById('pdfReaderClose').addEventListener('click', function () {
+    overlay.hidden = true;
+    document.body.style.overflow = '';
+  });
+
+  overlay.addEventListener('contextmenu', function (event) {
+    event.preventDefault();
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (overlay.hidden) return;
+    var key = event.key ? event.key.toLowerCase() : '';
+    if ((event.ctrlKey || event.metaKey) && (key === 's' || key === 'p')) {
+      event.preventDefault();
+    }
+  });
+
+  window.addEventListener('resize', function () {
+    if (pdfDoc && !overlay.hidden) renderPage(currentPage);
+  });
+
+  openReader();
+})();
