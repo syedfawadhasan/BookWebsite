@@ -1,64 +1,30 @@
-# Tomorrow Takes Practice — Website
+# Thank You — Read-Only Site
 
-A single-page site for the book, with an embedded Kit (ConvertKit) subscribe form.
+A minimal, single-purpose page: someone opens it, sees a short "thank you"
+message, and if they were sent a chapter link, it takes them straight into
+a read-only PDF viewer. No other pages, no subscribe form, no book
+marketing content — just the reader.
 
 ## What's in here
 
 ```
-index.html               the home page
-assets/css/style.css     shared styles, hover states, subscribe/reader styling
-assets/js/main.js        menu switching + subscribe form + PDF reader
-assets/img/book-cover.jpg  the book cover image
+index.html               the whole site (one page)
+assets/css/style.css     shared styles + reader styling
+assets/js/main.js        menu switching + PDF reader
 assets/files/            drop chapter PDFs here — see "Sharing a chapter" below
 README.md                this file
 ```
 
 ## How the menu works
 
-The page is built as several `<section class="page">` blocks (Home, Inside,
-How it works, Get updates, Author, Buy) inside one `index.html`. Only one is
-visible at a time — clicking a nav link doesn't scroll to content that's
-already on the page, it switches which section is shown.
+There's one `<section class="page">` (Read) and one nav link. The same
+hash-based switching mechanism from earlier builds is still here
+underneath — `assets/js/main.js` shows whichever `.page` matches the URL
+hash and defaults to `#read` since it's the only page — it's just that
+with a single section, there's nothing to switch between. If you ever want
+to add a second page back, wrap it in `<section id="your-id" class="page">`
+and add a matching nav link; no other JS changes needed.
 
-`assets/js/main.js` reads the URL hash (e.g. `#inside`), shows the matching
-`.page`, hides the rest, and highlights the matching nav link. It defaults
-to `#home` if there's no hash or an unrecognized one. To add a new section
-to the menu: wrap it in `<section id="your-id" class="page">…</section>`
-and add `<a href="#your-id" class="nav-link" data-page="your-id">Label</a>`
-in the nav — no other JS changes needed.
-
-## The subscribe form
-
-**⚠️ One setup step required before this works.** The "Get notified when the
-book launches" form is a plain HTML form we own outright — styled entirely
-by `style.css`, no injected script, no separate stylesheet to fight with.
-It posts directly to Kit's subscription endpoint via JavaScript
-(`assets/js/main.js`) so the page never navigates away.
-
-To connect it to your list:
-
-1. In Kit, go to **Grow → Landing Pages & Forms** and open your form.
-2. Look at the URL in your browser's address bar — it'll contain a number,
-   e.g. `app.kit.com/forms/1234567/edit`. That number is your form ID.
-3. Open `assets/js/main.js`, find this line near the bottom:
-   ```js
-   var KIT_FORM_ID = 'REPLACE_WITH_YOUR_FORM_ID';
-   ```
-   and replace `'REPLACE_WITH_YOUR_FORM_ID'` with your actual numeric ID
-   (still in quotes), e.g. `var KIT_FORM_ID = '1234567';`
-4. Deploy, submit a test email on the live page, and check **Grow →
-   Subscribers** in Kit to confirm it landed.
-
-**Why there's no visible confirmation from Kit itself:** the endpoint this
-posts to doesn't let the browser read its response (a CORS restriction), so
-the page shows "Thanks — check your inbox to confirm" as soon as the
-request completes without a network error, rather than waiting for Kit to
-confirm success. If an email doesn't land in Kit after testing, double-check
-the form ID first.
-
-There's no "Built with Kit" badge to worry about anymore, since this is our
-own form — nothing from Kit renders on the page except the confirmation
-email it sends after someone subscribes.
 
 ## Sharing a chapter to read online
 
@@ -140,8 +106,7 @@ exact DNS records: https://docs.github.com/pages/configuring-a-custom-domain-for
 
 ## Notes
 
-- This package currently has only the home page. If you'd like the other
-  pages (Book, Author, Sample, Reviews, FAQ, Contact) built out in this same
-  visual style, that's a separate step — just ask.
-- The "AUTHOR PHOTO" circle and "Author Name" placeholders in the Author
-  section still need your real photo and bio.
+- This is intentionally bare-bones — one page, one job. If you later want
+  the full marketing site (Home, Inside, How it works, subscribe form,
+  Author, Buy) back alongside this, that's a separate build — just ask, the
+  pieces from the earlier version still exist and can be reintroduced.

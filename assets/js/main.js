@@ -1,9 +1,10 @@
 // Menu-controlled sections: show only the .page whose id matches the URL
 // hash, hide the rest, and highlight the matching nav link. Defaults to
-// #home when there's no hash (or an unrecognized one).
+// #read when there's no hash (or an unrecognized one) — this build only
+// has the one page.
 
 (function () {
-  var DEFAULT_PAGE = 'home';
+  var DEFAULT_PAGE = 'read';
 
   function currentPageId() {
     var hash = window.location.hash.replace('#', '');
@@ -44,7 +45,7 @@
 // — 1234567 is the ID you need.
 
 (function () {
-    var KIT_FORM_ID = '9810442';
+  var KIT_FORM_ID = 'REPLACE_WITH_YOUR_FORM_ID';
   var ENDPOINT = 'https://app.kit.com/forms/' + KIT_FORM_ID + '/subscriptions';
 
   var form = document.getElementById('subscribeForm');
