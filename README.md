@@ -1,103 +1,147 @@
-# Tomorrow Is a Practice — Website
+# Tomorrow Takes Practice — Website
 
-## Project structure
+A single-page site for the book, with an embedded Kit (ConvertKit) subscribe form.
+
+## What's in here
 
 ```
-/
-├── index.html              ← the whole site (all pages/sections)
-├── assets/
-│   ├── css/style.css        ← all site styling
-│   ├── js/main.js           ← navigation, FAQ accordion, PDF reader logic
-│   └── img/book-cover.jpg   ← book cover image
-├── files/                   ← put chapter PDFs here (see below)
-└── README.md
+index.html               the home page
+assets/css/style.css     shared styles, hover states, subscribe/reader styling
+assets/js/main.js        menu switching + subscribe form + PDF reader
+assets/img/book-cover.jpg  the book cover image
+assets/files/            drop chapter PDFs here — see "Sharing a chapter" below
+README.md                this file
 ```
 
-This is a **static site** — plain HTML/CSS/JS, no build step, no server-side
-code required. It works on any standard web host.
+## How the menu works
 
----
+The page is built as several `<section class="page">` blocks (Home, Inside,
+How it works, Get updates, Author, Buy) inside one `index.html`. Only one is
+visible at a time — clicking a nav link doesn't scroll to content that's
+already on the page, it switches which section is shown.
 
-## Adding chapters to the "Read" page
+`assets/js/main.js` reads the URL hash (e.g. `#inside`), shows the matching
+`.page`, hides the rest, and highlights the matching nav link. It defaults
+to `#home` if there's no hash or an unrecognized one. To add a new section
+to the menu: wrap it in `<section id="your-id" class="page">…</section>`
+and add `<a href="#your-id" class="nav-link" data-page="your-id">Label</a>`
+in the nav — no other JS changes needed.
 
-Open `assets/js/main.js` and find `READ_LIBRARY` near the top. Add one entry
-per chapter:
+## The subscribe form
 
-```js
-const READ_LIBRARY = {
-  'ch1-tafakkur': {
-    title: 'Chapter 1 — Tafakkur',
-    subtitle: 'Reflection',
-    url: 'files/ch1-tafakkur.pdf'
-  },
-  'ch2-sabr': {
-    title: 'Chapter 2 — Sabr',
-    subtitle: 'Patience',
-    url: 'files/ch2-sabr.pdf'
-  }
-};
+**⚠️ One setup step required before this works.** The "Get notified when the
+book launches" form is a plain HTML form we own outright — styled entirely
+by `style.css`, no injected script, no separate stylesheet to fight with.
+It posts directly to Kit's subscription endpoint via JavaScript
+(`assets/js/main.js`) so the page never navigates away.
+
+To connect it to your list:
+
+1. In Kit, go to **Grow → Landing Pages & Forms** and open your form.
+2. Look at the URL in your browser's address bar — it'll contain a number,
+   e.g. `app.kit.com/forms/1234567/edit`. That number is your form ID.
+3. Open `assets/js/main.js`, find this line near the bottom:
+   ```js
+   var KIT_FORM_ID = 'REPLACE_WITH_YOUR_FORM_ID';
+   ```
+   and replace `'REPLACE_WITH_YOUR_FORM_ID'` with your actual numeric ID
+   (still in quotes), e.g. `var KIT_FORM_ID = '1234567';`
+4. Deploy, submit a test email on the live page, and check **Grow →
+   Subscribers** in Kit to confirm it landed.
+
+**Why there's no visible confirmation from Kit itself:** the endpoint this
+posts to doesn't let the browser read its response (a CORS restriction), so
+the page shows "Thanks — check your inbox to confirm" as soon as the
+request completes without a network error, rather than waiting for Kit to
+confirm success. If an email doesn't land in Kit after testing, double-check
+the form ID first.
+
+There's no "Built with Kit" badge to worry about anymore, since this is our
+own form — nothing from Kit renders on the page except the confirmation
+email it sends after someone subscribes.
+
+## Sharing a chapter to read online
+
+No page to build and nothing to update in code — the link is just the
+filename.
+
+1. Drop a PDF into `assets/files/`, e.g. `assets/files/chapter-3.pdf`.
+   Use only letters, numbers, hyphens, and underscores in the filename —
+   no spaces.
+2. Share this link: `https://your-domain.com/?read=chapter-3`
+   (swap `chapter-3` for whatever you named the file, without `.pdf`).
+3. Opening that link takes the reader straight into a full-screen viewer —
+   they never see the site's normal pages first.
+
+Anyone who just visits the site normally, or clicks the **Read** menu item,
+sees a plain "open the link you were sent" message — there's no public
+list of chapters anywhere on the site, so a link only works if you've
+shared it.
+
+### Testing locally — don't just double-click index.html
+
+PDF.js needs to load a background Worker script to do the actual page
+rendering. Browsers block that under the `file://` protocol (opening the
+file directly from disk) — it's treated as a restricted origin and can't
+load a worker from the CDN. You'll see the reader open, controls appear,
+but the page itself stays blank.
+
+**Serve the folder over local http instead.** From inside the site folder:
+
+```
+python3 -m http.server 8000
 ```
 
-Drop the actual PDF files into the `/files` folder with matching filenames.
-Because the PDFs now live on your own site (instead of an external host),
-there's no CORS issue to worry about — this is the easiest setup.
+then open `http://localhost:8000/?read=your-file-name` in the browser. Any
+local static server works the same way (VS Code's "Live Server" extension,
+`npx serve`, etc.) — the point is just `http://` instead of `file://`.
 
-Each chapter also gets a direct shareable link automatically:
-`yoursite.com/index.html?read=ch1-tafakkur`
+Once deployed to GitHub Pages it'll be `https://`, and this issue doesn't
+come up at all — this is purely a local-testing quirk.
 
----
+**What this does and doesn't prevent:** the viewer renders each page as an
+image on a canvas rather than an embedded PDF, so there's no browser
+toolbar, no visible download button, and no direct link to the raw file.
+Right-click and Ctrl+S/Ctrl+P are also blocked while it's open. None of
+that stops someone determined — a screenshot, or opening browser dev tools
+and pulling the file from the network tab, both still work. This is a
+casual-download deterrent, not real access control. Real access control
+would mean a backend issuing temporary, authenticated links instead of a
+plain static file anyone with the URL can fetch — a bigger project than a
+static GitHub Pages site.
 
-## Deploying — pick your provider
+## Deploying to GitHub Pages
 
-### Option A: GoDaddy / cPanel (traditional hosting)
+1. Create a new repository on GitHub (or use an existing one).
+2. Upload these files to the repository, keeping the folder structure intact
+   — `index.html` at the root, `assets/` as a folder next to it. You can drag
+   and drop them in the GitHub web UI, or:
+   ```
+   git init
+   git add .
+   git commit -m "Add book website"
+   git branch -M main
+   git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO.git
+   git push -u origin main
+   ```
+3. In the repository, go to **Settings → Pages**.
+4. Under **Build and deployment**, set **Source** to "Deploy from a branch",
+   branch `main`, folder `/ (root)`. Save.
+5. GitHub will publish the site at
+   `https://YOUR-USERNAME.github.io/YOUR-REPO/` within a minute or two.
 
-1. Log into your hosting account and open **File Manager** (or connect via
-   FTP using a client like FileZilla).
-2. Navigate to your site's web root — usually `public_html/`.
-3. Upload the **entire contents** of this project folder (not the folder
-   itself — the files and subfolders should sit directly inside
-   `public_html/`).
-4. Confirm `index.html` ends up at `public_html/index.html`.
-5. Visit your domain — it should load immediately. No build step needed.
+### Using a custom domain
 
-If you want the book site on a subdomain (e.g. `book.yourdomain.com`)
-instead of the main domain, create the subdomain in cPanel first, then
-upload into that subdomain's folder instead.
+If you want a domain instead of the github.io URL, add it under
+**Settings → Pages → Custom domain**, then point your domain's DNS to
+GitHub Pages (an `A` record to GitHub's IPs, or a `CNAME` record to
+`YOUR-USERNAME.github.io` for a subdomain). GitHub's docs walk through the
+exact DNS records: https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site
 
-### Option B: Netlify or Vercel (modern static hosting, free tier)
+## Notes
 
-**Drag-and-drop (fastest, no account setup beyond signing in):**
-1. Go to [netlify.com](https://netlify.com) (or [vercel.com](https://vercel.com)) and sign in.
-2. Drag this whole project folder onto their dashboard upload area.
-3. It deploys automatically and gives you a live URL in seconds.
-4. Add your custom domain under **Site settings → Domain management**.
-
-**Git-based (better for ongoing edits):**
-1. Push this project folder to a GitHub repository.
-2. Connect that repo in Netlify/Vercel — it auto-deploys on every push.
-3. Add your custom domain the same way as above.
-
----
-
-## Testing before you deploy
-
-Because this site uses PDF.js and the Kit form, some features only work
-correctly when served over `http://` or `https://` — not when opening
-`index.html` directly as a `file://` path. To test locally first:
-
-- **Simplest:** open a terminal in this folder and run `python3 -m http.server 8000`,
-  then visit `http://localhost:8000` in your browser.
-- Or just upload to your host and test live — for a small static site,
-  that's often just as fast.
-
----
-
-## Custom domain checklist
-
-- [ ] Domain purchased and pointed at your host (DNS records set)
-- [ ] SSL certificate active (most hosts do this automatically — look for
-      the padlock icon once live)
-- [ ] Kit form tested end-to-end with a real email
-- [ ] All placeholder text (author bio, sample excerpt, focus group quotes)
-      replaced with final content
-- [ ] Contact page email/Instagram links updated with your real handles
+- This package currently has only the home page. If you'd like the other
+  pages (Book, Author, Sample, Reviews, FAQ, Contact) built out in this same
+  visual style, that's a separate step — just ask.
+- The "AUTHOR PHOTO" circle and "Author Name" placeholders in the Author
+  section still need your real photo and bio.
