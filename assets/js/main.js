@@ -156,18 +156,37 @@
     rendering = true;
 
     pdfDoc.getPage(num).then(function (page) {
+      // Render at the device's actual pixel density, not just CSS pixels.
+      // Phones commonly pack 2-3 physical pixels into every CSS pixel;
+      // without this, the canvas bitmap is lower-resolution than the
+      // screen it's displayed on, and the browser stretches it to fit —
+      // sharp on a ~1x laptop display, soft/hazy on a 2-3x phone screen.
+      var pixelRatio = window.devicePixelRatio || 1;
+
       var containerWidth = viewport.clientWidth - 64;
       var baseViewport = page.getViewport({ scale: 1 });
       var scale = Math.min(1.4, containerWidth / baseViewport.width);
       var scaledViewport = page.getViewport({ scale: scale });
 
-      canvas.width = scaledViewport.width;
-      canvas.height = scaledViewport.height;
+      // The bitmap (canvas.width/height) is rendered at full device
+      // resolution; the display size (canvas.style width/height) stays at
+      // the original CSS-pixel dimensions, so the page appears the same
+      // physical size on screen — just crisper.
+      canvas.width = Math.floor(scaledViewport.width * pixelRatio);
+      canvas.height = Math.floor(scaledViewport.height * pixelRatio);
+      canvas.style.width = scaledViewport.width + 'px';
+      canvas.style.height = scaledViewport.height + 'px';
       watermark.style.width = scaledViewport.width + 'px';
       watermark.style.height = scaledViewport.height + 'px';
 
       var ctx = canvas.getContext('2d');
-      page.render({ canvasContext: ctx, viewport: scaledViewport }).promise
+      var renderContext = {
+        canvasContext: ctx,
+        viewport: scaledViewport,
+        transform: pixelRatio !== 1 ? [pixelRatio, 0, 0, pixelRatio, 0, 0] : null
+      };
+
+      page.render(renderContext).promise
         .then(function () {
           rendering = false;
           currentPage = num;
