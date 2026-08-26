@@ -3,53 +3,261 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thank You</title>
+<title>A New Book — Coming Soon</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-<div style="min-height: 100vh;">
-  <nav style="display: flex; align-items: center; justify-content: space-between; padding: 22px 64px; border-bottom: 1px solid rgba(163,121,58,0.4);">
-    <div style="display: flex; align-items: baseline; gap: 14px;">
-      <span style="color: #a3793a; font-size: 15px;">◆</span>
-      <span style="font-size: 24px; font-weight: 600; letter-spacing: 0.5px;">Thank You</span>
-    </div>
-    <div style="display: flex; align-items: center; gap: 36px; font-size: 18px;">
-      <a href="#read" class="nav-link" data-page="read" style="text-decoration: none;">Read</a>
-    </div>
-  </nav>
+<div class="site-shell textured-bg">
+    <svg class="textured-bg-svg" viewBox="0 0 1440 1100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <filter id="grain-home"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+        <linearGradient id="w1-home" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#D6DDC2"/><stop offset="100%" stop-color="#C4CFA9"/></linearGradient>
+        <linearGradient id="w2-home" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C0CBA3"/><stop offset="100%" stop-color="#D9E0C0"/></linearGradient>
+        <linearGradient id="w3-home" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#AEBB89"/><stop offset="100%" stop-color="#C7D1A6"/></linearGradient>
+      </defs>
+      <rect width="1440" height="1100" fill="#F6F5EC"/>
+      <path d="M1440 0 C1180 120 1240 330 1040 470 C860 596 900 820 700 940 C520 1046 420 1040 0 1100 L1440 1100 Z" fill="url(#w1-home)" opacity="0.9"/>
+      <path d="M1440 140 C1240 250 1300 450 1120 590 C960 714 1000 900 820 1010 C680 1096 560 1080 260 1100 L1440 1100 Z" fill="url(#w2-home)" opacity="0.85"/>
+      <path d="M1440 380 C1300 470 1350 640 1200 760 C1070 864 1100 1000 960 1080 L1440 1100 Z" fill="url(#w3-home)" opacity="0.8"/>
+      <path d="M0 980 C220 940 340 1000 560 1030 C760 1057 900 1030 1120 1060 L1440 1090 L1440 1100 L0 1100 Z" fill="#C9D3AC" opacity="0.75"/>
+      <rect width="1440" height="1100" filter="url(#grain-home)" opacity="0.055"/>
+    </svg>
 
-  <section id="read" class="page">
-    <div style="padding: 90px 64px; text-align: center; max-width: 700px; margin: 0 auto;">
-      <div style="color: #7c5a22; font-size: 15px; letter-spacing: 3px; font-weight: 600;">READ ONLINE</div>
-      <h2 style="font-size: 42px; font-weight: 500; margin: 20px 0 14px;">Thank you for reading</h2>
-      <p style="font-size: 22px; line-height: 1.5; color: #38462f; margin: 0;">If someone sent you a link to a sample chapter or excerpt, open it directly — it'll take you straight into the reader, right here on this page.</p>
+  <!-- ============================================================
+       HEADER / NAV — same on every page. To add a page, copy this
+       block and add a matching <a class="tab-link"> to the new file.
+       ============================================================ -->
+  <header class="site-header">
+    <div class="brand">
+      <div class="brand-mark">عمل</div>
+      <span class="brand-title">A New Book</span>
     </div>
-  </section>
+    <nav class="tab-nav">
+      <a href="index.html" class="tab-link is-current">Home</a>
+      <a href="about-book.html" class="tab-link">About the Book</a>
+      <a href="author.html" class="tab-link">Author</a>
+    </nav>
+  </header>
+
+  <main class="page-main">
+
+    <!-- ============================================================
+         HERO — headline, subhead, "something is taking shape" badge,
+         and the gold rule+diamond divider. Edit the text directly
+         below; nothing else needs to change.
+         ============================================================ -->
+    <div class="hero">
+      <div class="hero-arch"><span>عمل</span></div>
+      <span class="hero-badge">Something is taking shape</span>
+      <h1 class="hero-title">A practical journey for bringing Islamic values into everyday life</h1>
+      <div class="hero-divider">
+        <span class="line left"></span>
+        <span class="diamond"></span>
+        <span class="line right"></span>
+      </div>
+      <p class="hero-sub">Beautiful everyday stories and steady practice — grounded in faith, informed by psychology. Title and cover revealed at launch.</p>
+    </div>
+
+    <!-- ============================================================
+         STAT CARDS — the three "12 Chapters / Real stories / Weekly
+         practices" boxes. Each is a self-contained .stat-card block;
+         copy/paste one to add a fourth. The icon is a small inline
+         SVG inside .icon-circle — swap the <svg> to change it. Use
+         .stat-head.stat-head-solo (no <strong> number) for a card
+         without a numeral, like "Real stories" below.
+         ============================================================ -->
+    <div class="stat-grid">
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+              <path d="M12 6.5C10.5 5 8 4.5 4 4.8v12.4c4-.3 6.5.2 8 1.7 1.5-1.5 4-2 8-1.7V4.8c-4-.3-6.5.2-8 1.7z"/>
+              <path d="M12 6.5v12.4"/>
+            </svg>
+          </div>
+          <div class="stat-text">
+            <div class="stat-head"><strong class="stat-number">12</strong> Chapters</div>
+            <div class="stat-rule"></div>
+          </div>
+        </div>
+        <p class="stat-desc">One value at a time, in three sections.</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="6" r="2.6"/>
+              <path d="M6 19c0-3.6 2.7-6.4 6-6.4s6 2.8 6 6.4"/>
+            </svg>
+          </div>
+          <div class="stat-text">
+            <div class="stat-head stat-head-solo">Real stories</div>
+            <div class="stat-rule"></div>
+          </div>
+        </div>
+        <p class="stat-desc">Fiction rooted in everyday Muslim life.</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3.5" y="5" width="17" height="15" rx="2"/>
+              <path d="M3.5 10h17M8 5V3M16 5V3M8 14h2M14 14h2M8 17h2M14 17h2"/>
+            </svg>
+          </div>
+          <div class="stat-text">
+            <div class="stat-head"><strong class="stat-number">6</strong> Weekly practices</div>
+            <div class="stat-rule"></div>
+          </div>
+        </div>
+        <p class="stat-desc">Guided tools you can carry through the week.</p>
+      </div>
+
+    </div>
+
+    <!-- ============================================================
+         SUBSCRIBE + INSTAGRAM — appears on every page. The Kit form
+         ID lives in assets/js/main.js (KIT_FORM_ID), not here. The
+         Instagram URL below is the only place to change if the handle
+         ever changes (there's a matching copy of this block on
+         about-book.html, author.html, and inside the reader below).
+         ============================================================ -->
+    <div class="action-grid">
+
+      <section class="action-card subscribe-card">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="5.5" width="18" height="13" rx="2"/>
+            <path d="M3.6 6.6 12 13l8.4-6.4"/>
+          </svg>
+        </div>
+        <div class="subscribe-body">
+          <h2>Want the reveal first?</h2>
+          <p class="sub">One email at launch. Nothing else.</p>
+          <form id="notifyForm" class="notify-form" novalidate>
+            <input type="email" name="email_address" id="notifyEmail" class="notify-input" placeholder="Your email address" required>
+            <button type="submit" id="notifyButton" class="btn-green">Notify me</button>
+          </form>
+          <p id="notifyMessage" class="notify-message" role="status" hidden></p>
+        </div>
+      </section>
+
+      <section class="action-card instagram-card">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <div class="ig-text">
+          <div class="ig-title">Follow Leena on Instagram</div>
+          <div class="ig-desc">Behind the writing, chapter notes, and first looks.</div>
+        </div>
+        <a href="https://www.instagram.com/leena.author/" target="_blank" rel="noopener" class="btn-maroon">@leena.author</a>
+      </section>
+
+    </div>
+
+  </main>
+
+  <footer class="site-footer">© 2026 · Coming soon</footer>
 </div>
 
-<div id="pdfReaderOverlay" class="pdf-reader-overlay" hidden>
+<!-- ============================================================
+     PDF READER OVERLAY — hidden by default, opened by
+     assets/js/main.js when the URL has ?read=filename. Body is split
+     into a left sidebar (subscribe + Instagram, always visible) and
+     the actual reading area (canvas + prev/next) on the right. Same
+     textured background as the rest of the site.
+     ============================================================ -->
+<div id="pdfReaderOverlay" class="pdf-reader-overlay textured-bg" hidden>
+    <svg class="textured-bg-svg" viewBox="0 0 1440 1100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <filter id="grain-reader"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+        <linearGradient id="w1-reader" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#D6DDC2"/><stop offset="100%" stop-color="#C4CFA9"/></linearGradient>
+        <linearGradient id="w2-reader" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C0CBA3"/><stop offset="100%" stop-color="#D9E0C0"/></linearGradient>
+        <linearGradient id="w3-reader" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#AEBB89"/><stop offset="100%" stop-color="#C7D1A6"/></linearGradient>
+      </defs>
+      <rect width="1440" height="1100" fill="#FAF9F2"/>
+      <path d="M1440 0 C1180 120 1240 330 1040 470 C860 596 900 820 700 940 C520 1046 420 1040 0 1100 L1440 1100 Z" fill="url(#w1-reader)" opacity="0.9"/>
+      <path d="M1440 140 C1240 250 1300 450 1120 590 C960 714 1000 900 820 1010 C680 1096 560 1080 260 1100 L1440 1100 Z" fill="url(#w2-reader)" opacity="0.85"/>
+      <path d="M1440 380 C1300 470 1350 640 1200 760 C1070 864 1100 1000 960 1080 L1440 1100 Z" fill="url(#w3-reader)" opacity="0.8"/>
+      <path d="M0 980 C220 940 340 1000 560 1030 C760 1057 900 1030 1120 1060 L1440 1090 L1440 1100 L0 1100 Z" fill="#C9D3AC" opacity="0.75"/>
+      <rect width="1440" height="1100" filter="url(#grain-reader)" opacity="0.055"/>
+    </svg>
+
   <div class="pdf-reader-topbar">
-    <span id="pdfReaderTitle" class="pdf-reader-title">Thank You</span>
-    <a href="#read" id="pdfReaderClose" class="pdf-reader-close">Close ✕</a>
+    <span id="pdfReaderTitle" class="pdf-reader-title serif">A New Book</span>
+    <button type="button" id="pdfReaderClose" class="pdf-reader-close">← Back to the book</button>
   </div>
 
-  <div id="pdfReaderStatus" class="pdf-reader-status"></div>
+  <div class="pdf-reader-body">
 
-  <div id="pdfReaderViewport" class="pdf-reader-viewport" hidden>
-    <div class="pdf-reader-canvas-wrap">
-      <canvas id="pdfReaderCanvas"></canvas>
-      <div class="pdf-reader-watermark" aria-hidden="true"></div>
+    <!-- Left sidebar: same subscribe + Instagram cards as the homepage,
+         just stacked instead of side-by-side (narrower column). -->
+    <aside class="reader-sidebar">
+      <section class="action-card subscribe-card">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="5.5" width="18" height="13" rx="2"/>
+            <path d="M3.6 6.6 12 13l8.4-6.4"/>
+          </svg>
+        </div>
+        <div class="subscribe-body">
+          <h2>Want the reveal first?</h2>
+          <p class="sub">One email at launch. Nothing else.</p>
+          <form id="readerNotifyForm" class="notify-form" novalidate>
+            <input type="email" name="email_address" id="readerNotifyEmail" class="notify-input" placeholder="Your email address" required>
+            <button type="submit" id="readerNotifyButton" class="btn-green">Notify me</button>
+          </form>
+          <p id="readerNotifyMessage" class="notify-message" role="status" hidden></p>
+        </div>
+      </section>
+
+      <section class="action-card instagram-card">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <div class="ig-text">
+          <div class="ig-title">Follow Leena on Instagram</div>
+          <div class="ig-desc">Behind the writing, chapter notes, and first looks.</div>
+        </div>
+        <a href="https://www.instagram.com/leena.author/" target="_blank" rel="noopener" class="btn-maroon">@leena.author</a>
+      </section>
+    </aside>
+
+    <!-- Right side: the actual chapter — status/loading text, the
+         rendered page, and prev/next controls. -->
+    <div class="pdf-reader-main">
+      <div id="pdfReaderStatus" class="pdf-reader-status"></div>
+
+      <div id="pdfReaderViewport" class="pdf-reader-viewport" hidden>
+        <div class="pdf-reader-canvas-wrap">
+          <canvas id="pdfReaderCanvas"></canvas>
+          <div class="pdf-reader-watermark" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div id="pdfReaderControls" class="pdf-reader-controls" hidden>
+        <button id="pdfPrevPage" class="pdf-reader-nav-button" type="button">‹ Prev</button>
+        <span id="pdfPageIndicator" class="pdf-reader-page-indicator">Page 1 of 1</span>
+        <button id="pdfNextPage" class="pdf-reader-nav-button" type="button">Next ›</button>
+      </div>
     </div>
-  </div>
 
-  <div id="pdfReaderControls" class="pdf-reader-controls" hidden>
-    <button id="pdfPrevPage" class="pdf-reader-nav-button" type="button">‹ Prev</button>
-    <span id="pdfPageIndicator" class="pdf-reader-page-indicator">Page 1 of 1</span>
-    <button id="pdfNextPage" class="pdf-reader-nav-button" type="button">Next ›</button>
   </div>
 </div>
 
