@@ -190,6 +190,14 @@
   function closeReader() {
     overlay.hidden = true;
     document.body.style.overflow = '';
+    // Drop the ?read= param so the address bar reflects the plain
+    // homepage — this matters when the reader was opened in its own
+    // new tab (e.g. from a "Read the sample" link), since hiding the
+    // overlay is that tab's only way back to the site.
+    if (window.history && window.history.replaceState) {
+      var cleanUrl = window.location.pathname + window.location.hash;
+      window.history.replaceState(null, '', cleanUrl);
+    }
   }
 
   prevBtn.addEventListener('click', function () {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>About the Book — A New Book</title>
+<title>About the Book — Tomorrow Takes Practice</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,100 +12,111 @@
 </head>
 <body>
 
-<div class="site-shell textured-bg">
-    <svg class="textured-bg-svg" viewBox="0 0 1440 1100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs>
-        <filter id="grain-about"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
-        <linearGradient id="w1-about" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#D6DDC2"/><stop offset="100%" stop-color="#C4CFA9"/></linearGradient>
-        <linearGradient id="w2-about" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C0CBA3"/><stop offset="100%" stop-color="#D9E0C0"/></linearGradient>
-        <linearGradient id="w3-about" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#AEBB89"/><stop offset="100%" stop-color="#C7D1A6"/></linearGradient>
-      </defs>
-      <rect width="1440" height="1100" fill="#FAF9F2"/>
-      <path d="M1440 0 C1180 120 1240 330 1040 470 C860 596 900 820 700 940 C520 1046 420 1040 0 1100 L1440 1100 Z" fill="url(#w1-about)" opacity="0.9"/>
-      <path d="M1440 140 C1240 250 1300 450 1120 590 C960 714 1000 900 820 1010 C680 1096 560 1080 260 1100 L1440 1100 Z" fill="url(#w2-about)" opacity="0.85"/>
-      <path d="M1440 380 C1300 470 1350 640 1200 760 C1070 864 1100 1000 960 1080 L1440 1100 Z" fill="url(#w3-about)" opacity="0.8"/>
-      <path d="M0 980 C220 940 340 1000 560 1030 C760 1057 900 1030 1120 1060 L1440 1090 L1440 1100 L0 1100 Z" fill="#C9D3AC" opacity="0.75"/>
-      <rect width="1440" height="1100" filter="url(#grain-about)" opacity="0.055"/>
-    </svg>
+<div class="site-shell">
 
   <!-- ============================================================
-       HEADER / NAV — identical block on every page.
+       HEADER / NAV — identical markup + classes on every page.
        ============================================================ -->
   <header class="site-header">
-    <div class="brand">
-      <div class="brand-mark">عمل</div>
-      <span class="brand-title">A New Book</span>
+    <div class="header-inner">
+      <span class="brand-title serif">Tomorrow Takes Practice</span>
+      <nav class="tab-nav">
+        <a href="index.html" class="tab-link">Home</a>
+        <a href="about-book.html" class="tab-link is-current">About the Book</a>
+        <a href="author.html" class="tab-link">Author</a>
+      </nav>
     </div>
-    <nav class="tab-nav">
-      <a href="index.html" class="tab-link">Home</a>
-      <a href="about-book.html" class="tab-link is-current">About the Book</a>
-      <a href="author.html" class="tab-link">Author</a>
-    </nav>
   </header>
 
+  <!-- ============================================================
+       TITLE BAND — the same shared .gradient-band + arch motifs as
+       the homepage hero, just shorter, so this page opens with the
+       same visual language before dropping into the page content.
+       ============================================================ -->
+  <section class="gradient-band">
+    <div class="arch-motif-wrap" aria-hidden="true">
+      <svg class="arch-motif" viewBox="0 0 460 620">
+        <path d="M60 600 L60 250 A170 170 0 0 1 400 250 L400 600" fill="none" stroke="#DCD7C2" stroke-width="20"/>
+        <path d="M130 600 L130 268 A100 100 0 0 1 330 268 L330 600" fill="none" stroke="#E2DECB" stroke-width="14"/>
+      </svg>
+      <svg class="arch-motif-r" viewBox="0 0 460 620">
+        <path d="M60 600 L60 250 A170 170 0 0 1 400 250 L400 600" fill="none" stroke="#DCD7C2" stroke-width="20"/>
+        <path d="M130 600 L130 268 A100 100 0 0 1 330 268 L330 600" fill="none" stroke="#E2DECB" stroke-width="14"/>
+      </svg>
+    </div>
+    <div class="title-band-inner">
+      <div class="eyebrow">About the book</div>
+      <h1 class="page-title serif">Twelve values, one week at a time</h1>
+    </div>
+  </section>
+
+  <div class="page-gradient-body">
   <main class="page-main">
 
     <!-- ============================================================
-         BOOK DESCRIPTION — edit the two paragraphs below freely.
+         Two-column layout: subscribe + Instagram on the left (same
+         plain hero-style markup as index.html, sticky so it stays in
+         view), full book description + sample chapter on the right.
          ============================================================ -->
-    <div class="book-content">
-      <div class="eyebrow">About the book</div>
-      <h1 class="book-title">Twelve values, one week at a time</h1>
-      <p>Each chapter takes a single Islamic value and follows it through three movements: a short story from everyday Muslim life, what psychology and behavioural science say about it, and a practice small enough to keep for a week.</p>
-      <p>It is written for readers who want depth without density — something you can read on a commute and still act on the same evening.</p>
+    <div class="book-layout">
 
-      <!-- Sample chapter card. The link opens the real PDF reader on
-           index.html — drop the actual PDF at
-           assets/files/sample-chapter.pdf for this button to work. -->
-      <div class="sample-card">
-        <div class="title serif">Sample chapter</div>
-        <p>Read the opening chapter, "Tafakkur and the Practice of Reflective Thinking."</p>
-        <a href="index.html?read=sample-chapter" class="btn-green">Read the sample</a>
-      </div>
-    </div>
+      <aside class="book-side">
 
-    <!-- ============================================================
-         SUBSCRIBE + INSTAGRAM — same block as every other page. See
-         the matching comment in index.html for details.
-         ============================================================ -->
-    <div class="action-grid">
+        <!-- ============================================================
+             SUBSCRIBE — same Kit-connected form as every other page
+             (ids notifyForm / notifyEmail / notifyButton /
+             notifyMessage), styled the same plain way as the homepage
+             hero instead of the boxed action-card.
+             ============================================================ -->
+        <form id="notifyForm" class="hero-form" novalidate>
+          <label for="notifyEmail" class="hero-notify-label">Subscribe to be the first to know when it's available.</label>
+          <input type="email" name="email_address" id="notifyEmail" class="notify-input" placeholder="Your email address" required>
+          <button type="submit" id="notifyButton" class="btn-green">Notify Me First</button>
+        </form>
+        <p id="notifyMessage" class="notify-message" role="status" hidden></p>
 
-      <section class="action-card subscribe-card">
-        <div class="icon-circle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="3" y="5.5" width="18" height="13" rx="2"/>
-            <path d="M3.6 6.6 12 13l8.4-6.4"/>
-          </svg>
-        </div>
-        <div class="subscribe-body">
-          <h2>Want the reveal first?</h2>
-          <p class="sub">One email at launch. Nothing else.</p>
-          <form id="notifyForm" class="notify-form" novalidate>
-            <input type="email" name="email_address" id="notifyEmail" class="notify-input" placeholder="Your email address" required>
-            <button type="submit" id="notifyButton" class="btn-green">Notify me</button>
-          </form>
-          <p id="notifyMessage" class="notify-message" role="status" hidden></p>
-        </div>
-      </section>
-
-      <section class="action-card instagram-card">
-        <div class="icon-circle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <!-- ============================================================
+             INSTAGRAM — same link as every other page. Update here and
+             in index.html / author.html if the handle ever changes.
+             ============================================================ -->
+        <a href="https://www.instagram.com/leena.author/" target="_blank" rel="noopener" class="hero-ig-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
             <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
             <circle cx="12" cy="12" r="4"/>
             <circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none"/>
           </svg>
+          Follow @leena.author for first looks
+        </a>
+
+      </aside>
+
+      <!-- ============================================================
+           BOOK DESCRIPTION — edit the paragraphs below freely.
+           ============================================================ -->
+      <div class="book-content">
+        <p>Islam is a way of life. Yet living its guidance amid demanding work, complicated relationships, family responsibilities, unexpected changes, and uncertain plans is not always easy.</p>
+        <p><i>Tomorrow Takes Practice</i> explores twelve Islamic values that can help us meet these everyday pressures with greater intention, steadiness, and trust in Allah.</p>
+        <p>Through twelve relatable fictional stories, the book brings values such as tafakkur, muraqabah, tawakkul, ikhlas, amanah, and istiqamah into recognizable moments: a difficult conversation, a demanding decision, a mistake we regret, or a plan that did not unfold as expected.</p>
+        <p>Each chapter connects one Islamic value with a common human challenge. Islamic teaching provides the foundation and direction, while carefully selected insights from psychology and behavioral research illuminate the thoughts, emotions, and habits that can make these moments harder. The chapter then offers a practical way to carry that value into daily life.</p>
+        <p>An end-of-the-day muhasabah closes each chapter with guided reflection, helping readers look back honestly and choose one sincere step to practice tomorrow.</p>
+        <p>This book does not promise a life without pressure or a path to perfection. It offers a more intentional way to meet the life we already have: to think more clearly under pressure, speak with greater care, respond to uncertainty with trust, and return with sincerity after mistakes.</p>
+        <p>For anyone seeking to bring Islamic guidance more fully into everyday life, <i>Tomorrow Takes Practice</i> offers a practical place to begin.</p>
+        <p>A more peaceful tomorrow begins with what we practice today.</p>
+
+        <!-- Sample chapter card. The link opens the real PDF reader on
+             index.html — drop the actual PDF at
+             assets/files/sample-chapter.pdf for this button to work. -->
+        <div class="sample-card">
+          <div class="title serif">Sample chapter</div>
+          <p>Read the opening chapter, "Tafakkur and the Practice of Reflective Thinking."</p>
+          <a href="/?read=ch01_tafakkur_kdp_final_updated" target="_blank" rel="noopener" class="btn-green">Read the sample</a>
         </div>
-        <div class="ig-text">
-          <div class="ig-title">Follow Leena on Instagram</div>
-          <div class="ig-desc">Behind the writing, chapter notes, and first looks.</div>
-        </div>
-        <a href="https://www.instagram.com/leena.author/" target="_blank" rel="noopener" class="btn-maroon">@leena.author</a>
-      </section>
+      </div>
 
     </div>
 
   </main>
+  </div>
 
   <footer class="site-footer">© 2026 · Coming soon</footer>
 </div>
