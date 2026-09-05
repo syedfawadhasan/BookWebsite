@@ -10,7 +10,7 @@
 // can share this same logic and the same Kit form.
 
 (function () {
-  var KIT_FORM_ID = '9810442';
+    var KIT_FORM_ID = '9885575';
   var ENDPOINT = 'https://app.kit.com/forms/' + KIT_FORM_ID + '/subscriptions';
 
   function wireSubscribeForm(formId, emailId, buttonId, messageId) {
