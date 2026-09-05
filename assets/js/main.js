@@ -10,7 +10,7 @@
 // can share this same logic and the same Kit form.
 
 (function () {
-    var KIT_FORM_ID = '9885575';
+  var KIT_FORM_ID = '9885575';
   var ENDPOINT = 'https://app.kit.com/forms/' + KIT_FORM_ID + '/subscriptions';
 
   function wireSubscribeForm(formId, emailId, buttonId, messageId) {
@@ -33,6 +33,7 @@
       var email = emailInput.value.trim();
       if (!email) return;
 
+      var originalLabel = button.textContent;
       button.disabled = true;
       button.textContent = 'SENDING\u2026';
 
@@ -53,7 +54,7 @@
         })
         .finally(function () {
           button.disabled = false;
-          button.textContent = 'Notify me';
+          button.textContent = originalLabel;
         });
     });
   }
@@ -130,7 +131,14 @@
       // sharp on a ~1x laptop display, soft/hazy on a 2-3x phone screen.
       var pixelRatio = window.devicePixelRatio || 1;
 
-      var containerWidth = viewport.clientWidth - 64;
+      // Read the viewport's actual CSS padding instead of assuming a
+      // fixed number — .pdf-reader-viewport's padding shrinks from
+      // 32px to 16px per side under 480px, and hardcoding the desktop
+      // value here left mobile pages rendered narrower than the
+      // screen actually allows.
+      var viewportStyle = window.getComputedStyle(viewport);
+      var horizontalPadding = (parseFloat(viewportStyle.paddingLeft) || 0) + (parseFloat(viewportStyle.paddingRight) || 0);
+      var containerWidth = viewport.clientWidth - horizontalPadding;
       var baseViewport = page.getViewport({ scale: 1 });
       var scale = Math.min(1.4, containerWidth / baseViewport.width);
       var scaledViewport = page.getViewport({ scale: scale });
