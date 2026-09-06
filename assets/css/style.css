@@ -333,8 +333,6 @@ a:hover { color: var(--maroon-dark); }
   .hero-book-wrap { align-items: center; align-self: auto; padding-bottom: 0; }
   .book-scale { max-width: 300px; }
   .arch-motif, .arch-motif-r { display: none; }
-  .book-layout { grid-template-columns: 1fr; }
-  .book-side { position: static; max-width: 460px; }
 }
 @media (max-width: 560px) {
   .header-inner { flex-direction: column; gap: 14px; align-items: flex-start; }
@@ -493,6 +491,17 @@ a:hover { color: var(--maroon-dark); }
   position: sticky;
   top: 24px;
   align-self: start;
+}
+
+/* Below 800px there's not enough width for sidebar + text side by
+   side, so the subscribe/Instagram block stacks above the description
+   at full width instead — same pattern as .author-layout on mobile.
+   This has to come after the base .book-layout rule above (not up in
+   the earlier @media block near the hero) so it actually wins the
+   cascade at matching widths. */
+@media (max-width: 800px) {
+  .book-layout { grid-template-columns: 1fr; }
+  .book-side { position: static; max-width: 460px; }
 }
 
 .book-content { min-width: 0; }
