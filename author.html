@@ -72,17 +72,14 @@
           </div>
 
           <!-- ============================================================
-               SUBSCRIBE + INSTAGRAM — same plain hero-style markup as
-               index.html and about-book.html (ids notifyForm /
-               notifyEmail / notifyButton / notifyMessage, untouched by
-               main.js), instead of the boxed action-card.
+               PRE-ORDER — Amazon pre-order button, same markup pattern
+               (.hero-form / .hero-notify-label / .btn-green) as every
+               other page's pre-order block.
                ============================================================ -->
-          <form id="notifyForm" class="hero-form" novalidate>
-            <label for="notifyEmail" class="hero-notify-label">Join the pre-launch list and be the first to know when Kindle pre-orders open.</label>
-            <input type="email" name="email_address" id="notifyEmail" class="notify-input" placeholder="Your email address" required>
-            <button type="submit" id="notifyButton" class="btn-green">Join the List</button>
-          </form>
-          <p id="notifyMessage" class="notify-message" role="status" hidden></p>
+          <div class="hero-form">
+            <p class="hero-notify-label">Tomorrow Takes Practice is available for pre-order now.</p>
+            <a href="https://a.co/d/0iTZwNGN" target="_blank" rel="noopener" class="btn-green">Pre-Order on Amazon</a>
+          </div>
 
           <a href="https://www.instagram.com/leena.author/" target="_blank" rel="noopener" class="hero-ig-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
